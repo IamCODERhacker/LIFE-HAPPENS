@@ -1,0 +1,808 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LIFE HAPPENS | Shadow Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --bg:#08090f;
+  --panel:#11131d;
+  --panel2:#171a27;
+  --red:#f04452;
+  --red2:#a8172d;
+  --purple:#8e62ff;
+  --text:#f5f5fa;
+  --muted:#9295a8;
+  --green:#46d6a0;
+  --border:rgba(255,255,255,.08);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Inter,Arial,sans-serif;min-height:100vh;
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.orbit{font-family:Orbitron,Inter,sans-serif}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.red{color:var(--red)}
+.green{color:var(--green)}
+.purple{color:var(--purple)}
+.glass{
+  background:linear-gradient(145deg,rgba(26,28,43,.95),rgba(13,15,24,.96));
+  border:1px solid var(--border);border-radius:18px;
+  box-shadow:0 15px 45px rgba(0,0,0,.2);
+}
+button:focus-visible,input:focus-visible,select:focus-visible{
+  outline:2px solid var(--red);outline-offset:3px;
+}
+
+/* AUTH SCREEN */
+#authScreen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:30px;position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 50% 20%,rgba(117,18,43,.23),transparent 50%),
+    linear-gradient(135deg,#080910,#100d18 55%,#080910);
+}
+#authScreen:before,#authScreen:after{
+  content:"";position:absolute;border:1px solid rgba(240,68,82,.1);
+  border-radius:50%;width:650px;height:650px;animation:orbit 22s linear infinite;
+}
+#authScreen:after{width:850px;height:850px;animation-direction:reverse}
+@keyframes orbit{to{transform:rotate(360deg)}}
+.moon{
+  position:absolute;top:8%;right:13%;width:110px;height:110px;
+  border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8790,#c91c39 65%,#650b20);
+  box-shadow:0 0 50px rgba(240,68,82,.35),0 0 120px rgba(240,68,82,.12);
+  animation:moonFloat 5s ease-in-out infinite;
+}
+@keyframes moonFloat{50%{transform:translateY(-13px);box-shadow:0 0 75px rgba(240,68,82,.5)}}
+.auth-wrap{
+  position:relative;z-index:2;width:min(950px,100%);
+  display:grid;grid-template-columns:1fr 420px;gap:45px;align-items:center;
+}
+.brand-side{padding:20px}
+.brand-mark{
+  width:58px;height:58px;border-radius:16px;
+  background:linear-gradient(135deg,var(--red),#7d1026);
+  display:grid;place-items:center;font-size:28px;
+  box-shadow:0 0 35px rgba(240,68,82,.3);margin-bottom:25px;
+}
+.brand-side h1{font-size:clamp(38px,6vw,65px);line-height:1.02;margin:0 0 18px;letter-spacing:-3px}
+.brand-side h1 span{color:var(--red)}
+.brand-side p{color:#a6a8b9;line-height:1.8;max-width:420px}
+.ninja-art{
+  position:relative;width:220px;height:155px;margin:32px auto 0;
+  animation:ninjaFloat 4s ease-in-out infinite;
+}
+.ninja-head{
+  position:absolute;width:115px;height:90px;border-radius:50% 50% 43% 43%;
+  background:linear-gradient(140deg,#333444,#090a10);
+  left:53px;top:25px;box-shadow:inset 0 -10px 20px #000;
+}
+.ninja-face{
+  position:absolute;left:69px;top:59px;width:83px;height:25px;
+  background:#e9e6e5;border-radius:50% 50% 40% 40%;
+  clip-path:polygon(0 25%,100% 0,90% 100%,10% 100%);
+}
+.ninja-eye{
+  position:absolute;top:68px;width:18px;height:5px;background:#f04452;
+  box-shadow:0 0 12px #f04452;border-radius:100%;
+}
+.ninja-eye.one{left:85px}.ninja-eye.two{left:119px}
+.ninja-scarf{
+  position:absolute;top:91px;left:60px;width:135px;height:12px;
+  background:linear-gradient(90deg,#8d1028,#f04452);
+  transform:rotate(-8deg);border-radius:10px;
+}
+.ninja-scarf:after{
+  content:"";position:absolute;right:-48px;top:-8px;width:60px;height:13px;
+  background:#e83249;transform:rotate(-20deg);border-radius:10px;
+}
+@keyframes ninjaFloat{50%{transform:translateY(-10px) rotate(2deg)}}
+.auth-card{padding:34px;position:relative;overflow:hidden}
+.auth-card:before{
+  content:"";position:absolute;top:0;left:0;width:100%;height:3px;
+  background:linear-gradient(90deg,transparent,var(--red),var(--purple),transparent);
+}
+.auth-heading{margin-bottom:24px}
+.auth-heading h2{font-size:25px;margin:0 0 8px}
+.auth-heading p{font-size:13px;color:var(--muted);margin:0}
+.auth-tabs{
+  display:grid;grid-template-columns:1fr 1fr;padding:5px;
+  border-radius:12px;background:#090b13;margin-bottom:22px;
+}
+.auth-tab{
+  border:0;background:transparent;color:var(--muted);
+  padding:12px;border-radius:9px;font-weight:700;transition:.3s;
+}
+.auth-tab.active{
+  color:white;background:linear-gradient(120deg,#a51d35,#e33d50);
+  box-shadow:0 5px 20px rgba(240,68,82,.2);
+}
+.auth-form{animation:formIn .4s ease}
+@keyframes formIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.field{margin-bottom:15px}
+.field label{display:block;font-size:12px;color:#b6b8c7;margin-bottom:8px}
+.field input{
+  width:100%;padding:14px 15px;background:#090b13;
+  border:1px solid #292b3a;border-radius:10px;color:white;
+  transition:.25s;
+}
+.field input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(240,68,82,.1);outline:none}
+.password-wrap{position:relative}
+.password-wrap input{padding-right:70px}
+.toggle-pass{
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  border:0;background:transparent;color:var(--red);font-size:11px;font-weight:700;
+}
+.auth-options{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);margin:8px 0 18px}
+.auth-options label{display:flex;align-items:center;gap:7px}
+.primary-btn{
+  width:100%;border:0;border-radius:10px;padding:15px;
+  color:white;font-weight:800;letter-spacing:.5px;
+  background:linear-gradient(110deg,#a81831,#f04452);
+  box-shadow:0 8px 25px rgba(240,68,82,.2);transition:.25s;
+}
+.primary-btn:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(240,68,82,.35)}
+.auth-message{font-size:12px;min-height:18px;margin-top:12px;color:var(--red)}
+.auth-foot{text-align:center;font-size:10px;color:#777b8e;margin-top:18px;line-height:1.6}
+.demo-note{text-align:center;color:#85899c;font-size:10px;margin-top:12px}
+
+/* APP */
+#app{display:none;min-height:100vh}
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:245px;
+  padding:25px 17px;background:#0c0e17;
+  border-right:1px solid var(--border);z-index:5;
+  display:flex;flex-direction:column;
+}
+.logo{display:flex;gap:12px;align-items:center;margin:0 5px 42px}
+.logo-icon{
+  width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--red),#8e1028);
+  display:grid;place-items:center;font-size:20px;
+}
+.logo h2{font:700 14px Orbitron;margin:0}
+.logo p{font-size:9px;color:var(--red);letter-spacing:2px;margin:4px 0 0}
+.nav-label{font-size:9px;color:#666b80;letter-spacing:2px;margin:0 12px 12px}
+.nav-btn{
+  display:flex;align-items:center;gap:13px;width:100%;padding:13px 14px;
+  margin-bottom:6px;background:transparent;border:1px solid transparent;
+  border-radius:10px;color:#9699aa;text-align:left;font-size:12px;font-weight:600;
+  transition:.25s;
+}
+.nav-btn:hover,.nav-btn.active{
+  color:white;background:linear-gradient(90deg,rgba(240,68,82,.17),transparent);
+  border-color:rgba(240,68,82,.15);transform:translateX(3px);
+}
+.nav-btn.active{color:var(--red)}
+.nav-icon{width:20px;text-align:center;font-size:16px}
+.sidebar-bottom{margin-top:auto}
+.user-mini{padding:13px;background:#151724;border-radius:12px;display:flex;gap:10px;align-items:center}
+.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#632033;color:white;font-weight:800}
+.user-mini strong{font-size:11px;display:block}
+.user-mini small{font-size:9px;color:var(--muted)}
+.logout{border:0;background:transparent;color:#999;font-size:10px;margin-top:12px;padding:8px}
+.main{margin-left:245px;padding:30px 35px;max-width:1600px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;gap:15px}
+.topbar h1{font:700 20px Orbitron;margin:0}
+.topbar p{color:var(--muted);font-size:11px;margin:7px 0 0}
+.top-right{display:flex;gap:10px;align-items:center}
+.status-pill{font-size:10px;color:var(--green);padding:9px 12px;border:1px solid rgba(70,214,160,.2);border-radius:20px;background:rgba(70,214,160,.06)}
+.page{display:none;animation:pageIn .35s ease}
+.page.active{display:block}
+@keyframes pageIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.hero{
+  padding:30px;border-radius:18px;position:relative;overflow:hidden;margin-bottom:22px;
+  background:linear-gradient(110deg,#30101d,#191322 65%,#171127);
+  border:1px solid rgba(240,68,82,.18);
+}
+.hero:after{
+  content:"";position:absolute;width:260px;height:260px;border-radius:50%;
+  background:rgba(240,68,82,.1);right:8%;top:-100px;filter:blur(15px);
+}
+.hero h2{font:700 23px Orbitron;margin:0 0 10px;position:relative;z-index:1}
+.hero p{font-size:12px;color:#c2aab2;max-width:500px;line-height:1.7;position:relative;z-index:1}
+.hero-tag{display:inline-block;font-size:9px;color:#ff9ba5;letter-spacing:2px;margin-bottom:15px}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:22px}
+.stat-card{padding:20px;transition:.3s}
+.stat-card:hover{transform:translateY(-5px);border-color:rgba(240,68,82,.35)}
+.stat-card .stat-icon{font-size:19px;margin-bottom:16px}
+.stat-card p{font-size:10px;color:var(--muted);margin:0 0 8px}
+.stat-card h3{font:700 22px Orbitron;margin:0}
+.stat-card small{font-size:10px;color:var(--green)}
+.content-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:17px}
+.panel{padding:22px;margin-bottom:18px}
+.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.panel-head h3{font-size:13px;margin:0}
+.panel-head span{font-size:10px;color:var(--muted)}
+.progress-track{height:8px;background:#282a38;border-radius:20px;overflow:hidden;margin:14px 0}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--red2),var(--red));border-radius:20px;transition:width .6s}
+.history-item{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--border);font-size:11px}
+.history-item:last-child{border:0}
+.history-item small{display:block;color:var(--muted);margin-top:4px}
+.event-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.event-card{padding:20px;transition:.3s;display:flex;flex-direction:column;min-height:200px}
+.event-card:hover{transform:translateY(-5px);border-color:rgba(240,68,82,.3)}
+.event-emoji{font-size:26px;margin-bottom:15px}
+.event-card h3{font-size:13px;margin:0 0 8px}
+.event-card p{font-size:10px;color:var(--muted);line-height:1.6;flex:1}
+.event-cost{font:600 12px Orbitron;color:var(--red);margin:8px 0 12px}
+.action-btn{border:1px solid rgba(240,68,82,.35);background:rgba(240,68,82,.1);color:#ff7885;border-radius:8px;padding:10px;font-size:10px;font-weight:700}
+.action-btn:hover{background:var(--red);color:white}
+.action-btn:disabled{opacity:.35;cursor:not-allowed}
+.choice-list{display:grid;gap:12px;margin-top:15px}
+.choice{
+  padding:16px;background:#151724;border:1px solid var(--border);
+  border-radius:12px;display:flex;justify-content:space-between;align-items:center;gap:15px;
+}
+.choice h4{font-size:12px;margin:0 0 5px}
+.choice p{font-size:10px;color:var(--muted);margin:0}
+.choice button{white-space:nowrap}
+.select-box{width:100%;padding:13px;background:#090b13;border:1px solid #303244;color:white;border-radius:9px;margin:12px 0}
+.report-box{padding:25px;border-radius:15px;background:#11131d;border:1px solid var(--border);line-height:2}
+.report-box h2{font:700 18px Orbitron}
+.report-box p{font-size:12px;color:#bbb}
+.metric{display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:12px 0;font-size:12px}
+footer{padding:25px 0;text-align:center;color:#565a6d;font-size:9px}
+.mobile-menu{display:none;border:1px solid var(--border);background:#151724;color:white;border-radius:8px;padding:8px 12px}
+.toast{
+  position:fixed;right:25px;bottom:25px;padding:15px 20px;
+  background:#171a27;border:1px solid rgba(70,214,160,.3);
+  border-radius:12px;font-size:12px;z-index:20;
+  animation:pageIn .3s ease;box-shadow:0 10px 35px #0008;
+}
+@media(max-width:1050px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .event-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:760px){
+  .auth-wrap{grid-template-columns:1fr;max-width:430px;gap:10px}
+  .brand-side{text-align:center;padding:0}
+  .brand-side h1{font-size:38px}
+  .brand-side p{margin:auto;font-size:11px}
+  .brand-mark{margin:0 auto 15px}
+  .ninja-art{display:none}
+  .moon{width:65px;height:65px}
+  .auth-card{padding:24px}
+  .sidebar{transform:translateX(-100%);transition:.3s}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:20px 15px}
+  .mobile-menu{display:block}
+  .topbar h1{font-size:15px}
+  .content-grid{grid-template-columns:1fr}
+  .event-grid{grid-template-columns:1fr}
+  .hero{padding:22px}
+}
+</style>
+</head>
+<body>
+
+<!-- AUTHENTICATION -->
+<section id="authScreen">
+  <div class="moon"></div>
+  <div class="auth-wrap">
+    <div class="brand-side">
+      <div class="brand-mark">忍</div>
+      <h1 class="orbit">LIFE<br><span>HAPPENS.</span></h1>
+      <p>Prepare for the unpredictable. Every decision shapes your journey. Learn to adapt, plan and build resilience.</p>
+      <div class="ninja-art">
+        <div class="ninja-head"></div>
+        <div class="ninja-face"></div>
+        <div class="ninja-eye one"></div>
+        <div class="ninja-eye two"></div>
+        <div class="ninja-scarf"></div>
+      </div>
+      <div class="small muted orbit">SHADOW EDITION · LEVEL UP YOUR DECISIONS</div>
+    </div>
+
+    <div class="auth-card glass">
+      <div class="auth-heading">
+        <h2 id="authTitle">Welcome back.</h2>
+        <p id="authSubtitle">Enter the shadows. Continue your journey.</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="loginTab" onclick="switchAuth('login')">LOG IN</button>
+        <button class="auth-tab" id="signupTab" onclick="switchAuth('signup')">SIGN UP</button>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <div class="field">
+          <label>EMAIL OR USERNAME</label>
+          <input id="loginIdentity" type="text" placeholder="Enter your email or username" required autocomplete="username">
+        </div>
+        <div class="field">
+          <label>PASSWORD</label>
+          <div class="password-wrap">
+            <input id="loginPassword" type="password" placeholder="Enter your password" required autocomplete="current-password">
+            <button type="button" class="toggle-pass" onclick="togglePassword('loginPassword',this)">SHOW</button>
+          </div>
+        </div>
+        <div class="auth-options">
+          <label><input type="checkbox" id="rememberMe"> Remember on this device</label>
+          <span>SHADOW ACCESS</span>
+        </div>
+        <button class="primary-btn" type="submit">ENTER THE SHADOWS →</button>
+      </form>
+
+      <form id="signupForm" class="auth-form hidden">
+        <div class="field">
+          <label>YOUR NAME</label>
+          <input id="signupName" type="text" placeholder="Choose a username" required minlength="3" maxlength="24" autocomplete="username">
+        </div>
+        <div class="field">
+          <label>EMAIL</label>
+          <input id="signupEmail" type="email" placeholder="you@example.com" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label>PASSWORD</label>
+          <div class="password-wrap">
+            <input id="signupPassword" type="password" placeholder="At least 6 characters" required minlength="6" autocomplete="new-password">
+            <button type="button" class="toggle-pass" onclick="togglePassword('signupPassword',this)">SHOW</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>CONFIRM PASSWORD</label>
+          <input id="confirmPassword" type="password" placeholder="Enter your password again" required minlength="6" autocomplete="new-password">
+        </div>
+        <button class="primary-btn" type="submit">CREATE YOUR ACCOUNT →</button>
+      </form>
+      <div id="authMessage" class="auth-message" role="status"></div>
+      <div class="auth-foot">By continuing, you agree to use this educational simulation responsibly.</div>
+      <div class="demo-note">DEMO MODE · NO REAL MONEY · NO BANK CONNECTION</div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN APP -->
+<div id="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <div class="logo-icon">忍</div>
+      <div><h2>LIFE HAPPENS</h2><p>SHADOW EDITION</p></div>
+    </div>
+    <div class="nav-label">MAIN MENU</div>
+    <button class="nav-btn active" data-page="overview"><span class="nav-icon">◈</span>Overview</button>
+    <button class="nav-btn" data-page="events"><span class="nav-icon">⚡</span>Life Events</button>
+    <button class="nav-btn" data-page="decisions"><span class="nav-icon">⚔</span>Decision Room</button>
+    <button class="nav-btn" data-page="whatif"><span class="nav-icon">◉</span>What-If Engine</button>
+    <button class="nav-btn" data-page="resilience"><span class="nav-icon">◆</span>Resilience Index</button>
+    <button class="nav-btn" data-page="report"><span class="nav-icon">▤</span>My Report</button>
+    <div class="sidebar-bottom">
+      <div class="user-mini">
+        <div class="avatar" id="avatarLetter">S</div>
+        <div><strong id="sideUsername">Shadow User</strong><small>SHADOW MEMBER</small></div>
+      </div>
+      <button class="logout" onclick="logout()">↪ LOG OUT</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+        <div><h1 id="pageTitle">OVERVIEW</h1><p id="greeting">Your journey starts here.</p></div>
+      </div>
+      <div class="top-right"><span class="status-pill">● SIMULATION ACTIVE</span></div>
+    </header>
+
+    <section class="page active" id="page-overview">
+      <div class="hero">
+        <span class="hero-tag orbit">MISSION 01 · THE BEGINNING</span>
+        <h2>Every choice has a consequence.</h2>
+        <p>Life doesn't follow a script. Unexpected events happen. Your mission is to make thoughtful decisions, protect your resources and become more resilient.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card glass"><div class="stat-icon">◈</div><p>AVAILABLE BALANCE</p><h3 id="balanceStat">₹3,800</h3><small>Fictional currency</small></div>
+        <div class="stat-card glass"><div class="stat-icon">◆</div><p>SAVINGS RESERVE</p><h3 id="savedStat">₹1,200</h3><small>Keep building</small></div>
+        <div class="stat-card glass"><div class="stat-icon">⚡</div><p>EVENTS COMPLETED</p><h3 id="completedStat">0</h3><small>Decisions made</small></div>
+        <div class="stat-card glass"><div class="stat-icon">忍</div><p>RESILIENCE INDEX</p><h3 id="indexStat">70</h3><small>Out of 100</small></div>
+      </div>
+      <div class="content-grid">
+        <div class="panel glass">
+          <div class="panel-head"><h3>SAVINGS MISSION</h3><span id="savingsLabel">₹1,200 / ₹2,000</span></div>
+          <p class="muted small">Build your emergency reserve.</p>
+          <div class="progress-track"><div class="progress-fill" id="savingsProgress"></div></div>
+          <button class="action-btn" onclick="openSavings()">＋ ADD TO SAVINGS</button>
+        </div>
+        <div class="panel glass">
+          <div class="panel-head"><h3>RECENT ACTIVITY</h3><span>YOUR HISTORY</span></div>
+          <div id="recentHistory"><p class="muted small">No decisions yet. Your journey is waiting.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page-events">
+      <div class="panel glass">
+        <div class="panel-head"><h3>⚡ LIFE EVENTS</h3><span>UNEXPECTED MOMENTS</span></div>
+        <p class="muted small">Choose an event to enter the Decision Room. All amounts are fictional.</p>
+      </div>
+      <div class="event-grid" id="eventGrid"></div>
+    </section>
+
+    <section class="page" id="page-decisions">
+      <div class="panel glass">
+        <div class="panel-head"><h3>⚔ DECISION ROOM</h3><span>THINK BEFORE YOU ACT</span></div>
+        <div id="decisionContent"><p class="muted small">Select a life event to begin your mission.</p></div>
+      </div>
+    </section>
+
+    <section class="page" id="page-whatif">
+      <div class="panel glass">
+        <div class="panel-head"><h3>◉ WHAT-IF ENGINE</h3><span>SIMULATE YOUR FUTURE</span></div>
+        <p class="muted small">Explore hypothetical choices without changing your actual simulation balance.</p>
+        <label class="small muted">SELECT A SCENARIO</label>
+        <select class="select-box" id="whatIfSelect">
+          <option value="500">An unexpected expense of ₹500</option>
+          <option value="1000">An unexpected expense of ₹1,000</option>
+          <option value="1500">An unexpected expense of ₹1,500</option>
+          <option value="2500">An unexpected expense of ₹2,500</option>
+        </select>
+        <button class="action-btn" onclick="runWhatIf()">RUN SIMULATION →</button>
+        <div id="whatIfResult" style="margin-top:20px"></div>
+      </div>
+    </section>
+
+    <section class="page" id="page-resilience">
+      <div class="panel glass">
+        <div class="panel-head"><h3>◆ RESILIENCE INDEX</h3><span>YOUR CURRENT SCORE</span></div>
+        <div style="text-align:center;padding:30px">
+          <div class="orbit red" style="font-size:65px;font-weight:800" id="bigIndex">70</div>
+          <p class="muted small">OUT OF 100</p>
+          <div class="progress-track" style="max-width:450px;margin:20px auto"><div class="progress-fill" id="indexProgress"></div></div>
+          <h3 id="indexTitle">Building resilience</h3>
+          <p class="muted small" id="indexDescription">Your score reflects savings, available balance and completed decisions.</p>
+        </div>
+        <div class="metric"><span>Savings reserve</span><strong id="scoreSavings">20 / 20</strong></div>
+        <div class="metric"><span>Available balance</span><strong id="scoreBalance">20 / 20</strong></div>
+        <div class="metric"><span>Decision experience</span><strong id="scoreExperience">0 / 10</strong></div>
+        <p class="muted small" style="margin-top:18px">Educational scoring model: base score 50 + savings (up to 20) + balance (up to 20) + experience (up to 10). This is a learning metric, not a real financial rating.</p>
+      </div>
+    </section>
+
+    <section class="page" id="page-report">
+      <div class="report-box">
+        <span class="red orbit small">SHADOW EDITION · PERSONAL REPORT</span>
+        <h2>YOUR JOURNEY.</h2>
+        <p>A snapshot of your fictional financial decisions.</p>
+        <div class="metric"><span>Username</span><strong id="reportName">Shadow User</strong></div>
+        <div class="metric"><span>Available balance</span><strong id="reportBalance">₹3,800</strong></div>
+        <div class="metric"><span>Savings reserve</span><strong id="reportSaved">₹1,200</strong></div>
+        <div class="metric"><span>Total spent</span><strong id="reportSpent">₹0</strong></div>
+        <div class="metric"><span>Events completed</span><strong id="reportCompleted">0</strong></div>
+        <div class="metric"><span>Resilience Index</span><strong id="reportIndex">70 / 100</strong></div>
+        <div class="metric"><span>Account type</span><strong>LOCAL DEMO</strong></div>
+        <br>
+        <button class="action-btn" onclick="downloadReport()">↓ DOWNLOAD MY REPORT</button>
+      </div>
+    </section>
+    <footer>LIFE HAPPENS · SHADOW EDITION · AN EDUCATIONAL SIMULATION · NO REAL MONEY</footer>
+  </main>
+</div>
+
+<div id="toastArea"></div>
+
+<script>
+const USERS_KEY = "lifeHappensDemoUsers";
+const SESSION_KEY = "lifeHappensDemoSession";
+const STATE_KEY = "lifeHappensSimulation";
+
+const DEFAULT_STATE = {
+  balance:3800,
+  saved:1200,
+  spent:0,
+  completed:[],
+  history:[]
+};
+
+const events = [
+  {id:"birthday",name:"Birthday Invitation",emoji:"🎂",desc:"Your friend invites you to a birthday celebration. You want to participate without overspending.",choices:[
+    {name:"Attend with a planned budget",desc:"Join the celebration while keeping spending controlled.",cost:300},
+    {name:"Choose a thoughtful handmade gift",desc:"Save money while still celebrating your friend.",cost:150},
+    {name:"Skip this event",desc:"Keep your resources for another priority.",cost:0}
+  ]},
+  {id:"repair",name:"Bicycle Repair",emoji:"🚲",desc:"Your bicycle needs a repair before you can use it comfortably again.",choices:[
+    {name:"Get the essential repair",desc:"Pay for the necessary repair.",cost:600},
+    {name:"Ask for a repair estimate first",desc:"Understand the cost before deciding.",cost:100},
+    {name:"Use an alternative for now",desc:"Delay the expense and plan another option.",cost:0}
+  ]},
+  {id:"competition",name:"Competition Opportunity",emoji:"🏆",desc:"A school competition offers a chance to learn and gain experience.",choices:[
+    {name:"Participate",desc:"Invest in the learning opportunity.",cost:500},
+    {name:"Prepare with available resources",desc:"Participate with a lower-cost approach.",cost:200},
+    {name:"Pass this time",desc:"Keep your money for another goal.",cost:0}
+  ]},
+  {id:"books",name:"Study Materials",emoji:"📚",desc:"You need additional learning materials for an upcoming subject.",choices:[
+    {name:"Buy the required materials",desc:"Get the materials you need.",cost:700},
+    {name:"Borrow or share materials",desc:"Find a lower-cost way to access them.",cost:100},
+    {name:"Use existing resources",desc:"Make use of what you already have.",cost:0}
+  ]},
+  {id:"trip",name:"School Trip",emoji:"🚌",desc:"A school trip is announced. It could be a memorable learning experience.",choices:[
+    {name:"Join the trip",desc:"Set aside money for the experience.",cost:900},
+    {name:"Check for a lower-cost option",desc:"Explore available alternatives.",cost:400},
+    {name:"Do not participate",desc:"Keep your funds for other priorities.",cost:0}
+  ]},
+  {id:"project",name:"Group Project",emoji:"🧪",desc:"Your group needs materials to complete a project.",choices:[
+    {name:"Contribute to the materials",desc:"Support the shared project.",cost:350},
+    {name:"Reuse available materials",desc:"Find creative ways to reduce costs.",cost:100},
+    {name:"Discuss a shared budget",desc:"Plan the group's spending first.",cost:0}
+  ]},
+  {id:"device",name:"Device Accessory",emoji:"🎧",desc:"A useful accessory catches your attention. Is it a priority right now?",choices:[
+    {name:"Buy it",desc:"Spend on the item now.",cost:800},
+    {name:"Wait and compare options",desc:"Give yourself time to decide.",cost:0},
+    {name:"Choose a less expensive alternative",desc:"Find another option that meets your needs.",cost:300}
+  ]},
+  {id:"opportunity",name:"Skill Workshop",emoji:"💡",desc:"A workshop could help you develop a useful new skill.",choices:[
+    {name:"Join the workshop",desc:"Invest in a learning experience.",cost:1000},
+    {name:"Look for free learning resources",desc:"Explore accessible alternatives.",cost:0},
+    {name:"Save for a future workshop",desc:"Plan for the opportunity later.",cost:0}
+  ]}
+];
+
+let state = {...DEFAULT_STATE};
+let activeEvent = null;
+let currentUser = null;
+
+function getUsers(){
+  try{return JSON.parse(localStorage.getItem(USERS_KEY))||[]}
+  catch(e){return []}
+}
+function saveUsers(users){localStorage.setItem(USERS_KEY,JSON.stringify(users))}
+function hashDemoPassword(password){
+  // Demo-only checksum. This is NOT secure password hashing.
+  let h=2166136261;
+  for(let i=0;i<password.length;i++){h^=password.charCodeAt(i);h=Math.imul(h,16777619)}
+  return (h>>>0).toString(16);
+}
+function switchAuth(mode){
+  const login=mode==="login";
+  document.getElementById("loginTab").classList.toggle("active",login);
+  document.getElementById("signupTab").classList.toggle("active",!login);
+  document.getElementById("loginForm").classList.toggle("hidden",!login);
+  document.getElementById("signupForm").classList.toggle("hidden",login);
+  document.getElementById("authTitle").textContent=login?"Welcome back.":"Create your identity.";
+  document.getElementById("authSubtitle").textContent=login?"Enter the shadows. Continue your journey.":"Your journey begins with one decision.";
+  document.getElementById("authMessage").textContent="";
+}
+function togglePassword(id,button){
+  const input=document.getElementById(id);
+  const showing=input.type==="password";
+  input.type=showing?"text":"password";
+  button.textContent=showing?"HIDE":"SHOW";
+}
+document.getElementById("signupForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=document.getElementById("signupName").value.trim();
+  const email=document.getElementById("signupEmail").value.trim().toLowerCase();
+  const password=document.getElementById("signupPassword").value;
+  const confirm=document.getElementById("confirmPassword").value;
+  const message=document.getElementById("authMessage");
+  if(name.length<3){message.textContent="Username must contain at least 3 characters.";return}
+  if(password!==confirm){message.textContent="Your passwords do not match.";return}
+  const users=getUsers();
+  if(users.some(u=>u.email===email||u.name.toLowerCase()===name.toLowerCase())){
+    message.textContent="That username or email is already registered.";return;
+  }
+  users.push({name,email,passwordHash:hashDemoPassword(password)});
+  saveUsers(users);
+  message.style.color="var(--green)";
+  message.textContent="Account created! You can now log in.";
+  document.getElementById("loginIdentity").value=email;
+  document.getElementById("loginPassword").value="";
+  setTimeout(()=>switchAuth("login"),900);
+});
+document.getElementById("loginForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const identity=document.getElementById("loginIdentity").value.trim().toLowerCase();
+  const password=document.getElementById("loginPassword").value;
+  const user=getUsers().find(u=>(u.email===identity||u.name.toLowerCase()===identity)&&u.passwordHash===hashDemoPassword(password));
+  const message=document.getElementById("authMessage");
+  if(!user){message.textContent="Account not found or password incorrect.";return}
+  currentUser=user;
+  localStorage.setItem(SESSION_KEY,JSON.stringify({email:user.email}));
+  enterApp();
+});
+function loadState(){
+  try{
+    const all=JSON.parse(localStorage.getItem(STATE_KEY))||{};
+    state=all[currentUser.email]||{...DEFAULT_STATE,completed:[],history:[]};
+  }catch(e){state={...DEFAULT_STATE,completed:[],history:[]}}
+}
+function saveState(){
+  try{
+    const all=JSON.parse(localStorage.getItem(STATE_KEY))||{};
+    all[currentUser.email]=state;
+    localStorage.setItem(STATE_KEY,JSON.stringify(all));
+  }catch(e){toast("Could not save progress in this browser.")}
+}
+function enterApp(){
+  loadState();
+  document.getElementById("authScreen").style.display="none";
+  document.getElementById("app").style.display="block";
+  document.getElementById("sideUsername").textContent=currentUser.name;
+  document.getElementById("avatarLetter").textContent=currentUser.name.charAt(0).toUpperCase();
+  document.getElementById("reportName").textContent=currentUser.name;
+  document.getElementById("greeting").textContent="Welcome back, "+currentUser.name+". Stay ready for the unexpected.";
+  updateDashboard();
+  renderEvents();
+  showPage("overview");
+}
+function logout(){
+  localStorage.removeItem(SESSION_KEY);
+  currentUser=null;
+  document.getElementById("app").style.display="none";
+  document.getElementById("authScreen").style.display="flex";
+  document.getElementById("loginPassword").value="";
+  document.getElementById("authMessage").textContent="You have logged out.";
+  switchAuth("login");
+}
+function showPage(page){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("page-"+page).classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+  const titles={overview:"OVERVIEW",events:"LIFE EVENTS",decisions:"DECISION ROOM",whatif:"WHAT-IF ENGINE",resilience:"RESILIENCE INDEX",report:"MY REPORT"};
+  document.getElementById("pageTitle").textContent=titles[page];
+  document.getElementById("sidebar").classList.remove("open");
+  if(page==="resilience")renderResilience();
+  if(page==="report")renderReport();
+}
+document.querySelectorAll(".nav-btn").forEach(btn=>btn.addEventListener("click",()=>showPage(btn.dataset.page)));
+function toggleSidebar(){document.getElementById("sidebar").classList.toggle("open")}
+function money(n){return "₹"+Number(n).toLocaleString("en-IN")}
+function getResilience(){
+  const savings=Math.min(20,Math.round(state.saved/100));
+  const balance=Math.min(20,Math.round(state.balance/200));
+  const experience=Math.min(10,state.completed.length);
+  return {savings,balance,experience,total:Math.min(100,50+savings+balance+experience)};
+}
+function updateDashboard(){
+  const score=getResilience();
+  document.getElementById("balanceStat").textContent=money(state.balance);
+  document.getElementById("savedStat").textContent=money(state.saved);
+  document.getElementById("completedStat").textContent=state.completed.length;
+  document.getElementById("indexStat").textContent=score.total;
+  document.getElementById("savingsLabel").textContent=money(state.saved)+" / ₹2,000";
+  document.getElementById("savingsProgress").style.width=Math.min(100,state.saved/2000*100)+"%";
+  const history=document.getElementById("recentHistory");
+  history.innerHTML="";
+  if(!state.history.length)history.innerHTML='<p class="muted small">No decisions yet. Your journey is waiting.</p>';
+  state.history.slice(-4).reverse().forEach(item=>{
+    const row=document.createElement("div");row.className="history-item";
+    const left=document.createElement("div");
+    const strong=document.createElement("strong");strong.textContent=item.title;
+    const small=document.createElement("small");small.textContent=item.choice;
+    left.append(strong,small);
+    const right=document.createElement("strong");right.className=item.cost?"red":"green";
+    right.textContent=item.cost?"-"+money(item.cost):"₹0";
+    row.append(left,right);history.append(row);
+  });
+  renderResilience();
+  renderReport();
+}
+function renderEvents(){
+  const grid=document.getElementById("eventGrid");grid.innerHTML="";
+  events.forEach(event=>{
+    const done=state.completed.includes(event.id);
+    const card=document.createElement("div");card.className="event-card glass";
+    const emoji=document.createElement("div");emoji.className="event-emoji";emoji.textContent=event.emoji;
+    const title=document.createElement("h3");title.textContent=event.name;
+    const desc=document.createElement("p");desc.textContent=event.desc;
+    const status=document.createElement("div");status.className="event-cost";
+    status.textContent=done?"✓ COMPLETED":"MISSION AVAILABLE";
+    const btn=document.createElement("button");btn.className="action-btn";
+    btn.textContent=done?"COMPLETED":"ENTER MISSION →";btn.disabled=done;
+    btn.addEventListener("click",()=>openEvent(event.id));
+    card.append(emoji,title,desc,status,btn);grid.append(card);
+  });
+}
+function openEvent(id){
+  activeEvent=events.find(e=>e.id===id);
+  showPage("decisions");
+  const area=document.getElementById("decisionContent");area.innerHTML="";
+  const title=document.createElement("h2");title.textContent=activeEvent.emoji+" "+activeEvent.name;
+  const desc=document.createElement("p");desc.className="muted small";desc.textContent=activeEvent.desc;
+  const balance=document.createElement("p");balance.className="red orbit small";balance.textContent="AVAILABLE: "+money(state.balance);
+  const list=document.createElement("div");list.className="choice-list";
+  activeEvent.choices.forEach((choice,index)=>{
+    const row=document.createElement("div");row.className="choice";
+    const info=document.createElement("div");
+    const h=document.createElement("h4");h.textContent=choice.name;
+    const p=document.createElement("p");p.textContent=choice.desc;
+    info.append(h,p);
+    const btn=document.createElement("button");btn.className="action-btn";
+    btn.textContent=choice.cost?money(choice.cost):"₹0 · CHOOSE";
+    btn.disabled=choice.cost>state.balance;
+    btn.addEventListener("click",()=>makeDecision(index));
+    row.append(info,btn);list.append(row);
+  });
+  area.append(title,desc,balance,list);
+}
+function makeDecision(index){
+  if(!activeEvent)return;
+  const choice=activeEvent.choices[index];
+  if(choice.cost>state.balance){toast("Not enough fictional balance for this choice.");return}
+  state.balance-=choice.cost;
+  state.spent+=choice.cost;
+  state.completed.push(activeEvent.id);
+  state.history.push({title:activeEvent.name,choice:choice.name,cost:choice.cost,date:new Date().toLocaleDateString()});
+  saveState();
+  toast("Mission completed. Your decision has been recorded.");
+  activeEvent=null;
+  updateDashboard();renderEvents();showPage("events");
+}
+function openSavings(){
+  const amount=prompt("How much fictional money would you like to move into savings?");
+  if(amount===null)return;
+  const n=Number(amount);
+  if(!Number.isFinite(n)||n<=0||!Number.isInteger(n)){toast("Enter a positive whole number.");return}
+  if(n>state.balance){toast("You do not have enough available balance.");return}
+  state.balance-=n;state.saved+=n;
+  state.history.push({title:"Savings transfer",choice:"Moved money into savings",cost:0});
+  saveState();updateDashboard();toast("Savings updated.");
+}
+function runWhatIf(){
+  const cost=Number(document.getElementById("whatIfSelect").value);
+  const after=state.balance-cost;
+  const score=Math.max(0,Math.min(100,50+Math.min(20,Math.round(state.saved/100))+Math.min(20,Math.round(after/200))+Math.min(10,state.completed.length)));
+  const result=document.getElementById("whatIfResult");
+  result.innerHTML="";
+  const panel=document.createElement("div");panel.className="panel glass";
+  const h=document.createElement("h3");h.textContent="SIMULATION RESULT";
+  const p=document.createElement("p");p.className="muted small";p.textContent="If this fictional expense occurred, your estimated available balance would be:";
+  const amount=document.createElement("div");amount.className="orbit red";amount.style.fontSize="32px";amount.style.margin="15px 0";amount.textContent=money(after);
+  const scoreLine=document.createElement("p");scoreLine.className="small muted";scoreLine.textContent="Estimated resilience index: "+score+" / 100";
+  const note=document.createElement("p");note.className="small";note.textContent=after<0?"This expense exceeds your available balance. Consider alternatives.":"This is a hypothetical result. Your actual balance has not changed.";
+  panel.append(h,p,amount,scoreLine,note);result.append(panel);
+}
+function renderResilience(){
+  const s=getResilience();
+  document.getElementById("bigIndex").textContent=s.total;
+  document.getElementById("indexProgress").style.width=s.total+"%";
+  document.getElementById("scoreSavings").textContent=s.savings+" / 20";
+  document.getElementById("scoreBalance").textContent=s.balance+" / 20";
+  document.getElementById("scoreExperience").textContent=s.experience+" / 10";
+  document.getElementById("indexTitle").textContent=s.total>=85?"Shadow Master":s.total>=70?"Building resilience":"Keep learning and adapting";
+  document.getElementById("indexDescription").textContent="Your score is based on your fictional savings, available balance and experience with decisions.";
+}
+function renderReport(){
+  const s=getResilience();
+  document.getElementById("reportName").textContent=currentUser?.name||"Shadow User";
+  document.getElementById("reportBalance").textContent=money(state.balance);
+  document.getElementById("reportSaved").textContent=money(state.saved);
+  document.getElementById("reportSpent").textContent=money(state.spent);
+  document.getElementById("reportCompleted").textContent=state.completed.length;
+  document.getElementById("reportIndex").textContent=s.total+" / 100";
+}
+function downloadReport(){
+  renderReport();
+  const s=getResilience();
+  const content=`LIFE HAPPENS - SHADOW EDITION\nPERSONAL SIMULATION REPORT\n\nUsername: ${currentUser.name}\nAvailable balance: ${money(state.balance)}\nSavings: ${money(state.saved)}\nTotal spent: ${money(state.spent)}\nCompleted events: ${state.completed.length}\nResilience Index: ${s.total}/100\n\nDECISION HISTORY\n${state.history.map(h=>h.title+" - "+h.choice+" ("+money(h.cost)+")").join("\n")||"No decisions yet."}\n\nEducational simulation only. No real money or financial advice.`;
+  const blob=new Blob([content],{type:"text/plain"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");a.href=url;a.download="life-happens-report.txt";a.click();
+  URL.revokeObjectURL(url);
+}
+function toast(message){
+  const area=document.getElementById("toastArea");
+  const item=document.createElement("div");item.className="toast";item.textContent=message;
+  area.append(item);setTimeout(()=>item.remove(),2800);
+}
+
+// Restore a remembered demo session, if available.
+try{
+  const session=JSON.parse(localStorage.getItem(SESSION_KEY)||"null");
+  if(session){
+    const user=getUsers().find(u=>u.email===session.email);
+    if(user){currentUser=user;enterApp()}
+  }
+}catch(e){localStorage.removeItem(SESSION_KEY)}
+</script>
+</body>
+</html>
